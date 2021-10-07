@@ -59,6 +59,8 @@
             margin: 15px 0;
             padding: 0 1rem;
 
+            
+
             .loginFormElement{
                 width: 100%;
                 display: flex;
@@ -91,6 +93,12 @@
                         color: rgb(99, 99, 99);
                     }
 
+                }
+                .error{
+                    
+                    border:1px solid red;
+                    background-color: rgb(247, 196, 196);
+                    
                 }
 
                 
@@ -135,3 +143,4 @@
         }
     }
 }
+

@@ -1,14 +1,16 @@
-import React, { forwardRef, useReducer, useState } from 'react';
+import React, { forwardRef, useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.scss';
 
+
+//Reducer function
 const formReducer=(state,action)=>{
 
     if(action.type==="setEmail"){
         console.log(state);
         return {
             email:action.value,
-            isEmailValid:action.value.includes('@'),
+            isEmailValid:state.isEmailValid,
             password:state.password,
             isPasswordValid:state.isPasswordValid
         };
@@ -20,7 +22,7 @@ const formReducer=(state,action)=>{
             email:state.email,
             isEmailValid:state.isEmailValid,
             password:action.value,
-            isPasswordValid:action.value.trim().length>=6
+            isPasswordValid:state.isPasswordValid
         };
 
     }
@@ -50,14 +52,36 @@ const formReducer=(state,action)=>{
 
 };
 
+
+// initial value for reducer function
+const initialValue={
+    email:"",
+    isEmailValid:true,
+    password:"",
+    isPasswordValid:true,
+}
+
+//React Component
 const LoginForm = forwardRef((props,ref) => {
-    const initialValue={
-        email:"",
-        isEmailValid:false,
-        password:"",
-        isPasswordValid:false,
-    }
+
+    const [isFormValid,setIsFormValid]=useState(false);
+
     const[formState,dispatchForm]=useReducer(formReducer,initialValue);
+
+    useEffect(() => {
+        const identifier = setTimeout(() => {
+          setIsFormValid(
+            formState.email.includes('@') && formState.password.trim().length >= 6
+          );
+        }, 500);
+    
+        return () => {
+          clearTimeout(identifier);
+        };
+      }, [formState]);
+    
+    
+    
     
     const onChangeHandler=(event)=>{
         const name=event.target.name;
@@ -75,20 +99,20 @@ const LoginForm = forwardRef((props,ref) => {
     }
 
 
-    // const handleOnBlur=(event)=>{
-    //     const name=event.target.name;
-    //     const value=event.target.value;
+    const handleOnBlur=(event)=>{
+        const name=event.target.name;
+        const value=event.target.value;
 
-    //     // console.log(name," ",value)
-    //     if(name==="email"){
-    //         dispatchForm({type:"isEmailValid"});
-    //     }
+        // console.log(name," ",value)
+        if(name==="email"){
+            dispatchForm({type:"isEmailValid"});
+        }
 
-    //     if(name==="password"){
-    //         dispatchForm({type:"isPasswordValid"});
-    //     }
+        if(name==="password"){
+            dispatchForm({type:"isPasswordValid"});
+        }
 
-    // }
+    }
 
     
     return (
@@ -96,16 +120,16 @@ const LoginForm = forwardRef((props,ref) => {
             <h3>Login Form</h3>
             <form className="loginForm" action="">
 
-                <div className="loginFormElement">
-                    <input  onChange={onChangeHandler}ref={ref} autoFocus type="text" name="email" placeholder="Enter your email address" />
+                <div className={`loginFormElement`}>
+                    <input className={formState.isEmailValid ? ``:`error`} onBlur={handleOnBlur} onChange={onChangeHandler}ref={ref} autoFocus type="text" name="email" placeholder="Enter your email address" />
+                </div>
+
+                <div className={`loginFormElement`}>
+                    <input className={formState.isPasswordValid ? ``:`error`} onBlur={handleOnBlur} onChange={onChangeHandler}type="password" name="password" placeholder="Password"/>
                 </div>
 
                 <div className="loginFormElement">
-                    <input  onChange={onChangeHandler}type="password" name="password" placeholder="Password"/>
-                </div>
-
-                <div className="loginFormElement">
-                    <input type="submit" value="Log In" disabled = {!(formState.isEmailValid && formState.isPasswordValid)} />
+                    <input type="submit" value="Log In" disabled = {!isFormValid} />
                 </div>
 
                 <div className="loginFormElement">
