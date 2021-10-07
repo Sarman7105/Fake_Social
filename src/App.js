@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Route,Switch } from 'react-router';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import LandingPage from './Components/LandingPage/LandingPage'
+import VerifyUser from './Components/VerifyUser/VerifyUser';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <Switch>
+
+        <Route exact path='/'>
+          <LandingPage/>
+        </Route>
+
+        <Route path='/forgot'>
+          <ForgotPassword/>
+        </Route>
+
+        <Route path='/verify'>
+          <VerifyUser/>
+        </Route>
+
+      </Switch>
+     
+    </>
   );
 }
 
