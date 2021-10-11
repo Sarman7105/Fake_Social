@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { forwardRef, useContext, useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useLocation,useHistory } from 'react-router-dom';
 import AuthContext from '../../Store/AuthContext';
 import './LandingPage.scss';
 
@@ -72,6 +72,10 @@ const LoginForm = forwardRef((props,ref) => {
     const[formState,dispatchForm]=useReducer(formReducer,initialValue);
     const authContext=useContext(AuthContext);
 
+    let location = useLocation();
+    let history=useHistory();
+    let { from } = location.state || { from: { pathname: "/" } };
+
     useEffect(() => {
         const identifier = setTimeout(() => {
           setIsFormValid(
@@ -122,21 +126,26 @@ const LoginForm = forwardRef((props,ref) => {
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
-        axios
-        .post(url, {
-            email: formState.email,
-            password: formState.password,
-        })
-        .then((response) => {
+
+        //Axios api section
+        // axios
+        // .post(url, {
+        //     email: formState.email,
+        //     password: formState.password,
+        // })
+        // .then((response) => {
            
-            const {access_token}=response.data.data;
-            console.log(access_token);
-            localStorage.setItem('token',access_token);
+        //     const {access_token}=response.data.data;
+        //     console.log(access_token);
+        //     localStorage.setItem('token',access_token);
             
-        })
-        .catch((err)=>{
-            console.log(err.response)
-        })
+        // })
+        // .catch((err)=>{
+        //     console.log(err.response)
+        // })
+        localStorage.setItem('isLoggedIn',true);
+        history.replace(from);
+
     };
 
     
