@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Route,Redirect } from 'react-router';
-import AuthContext from '../../store/auth';
+import AuthContext from '../../Store/AuthContext';
 
 const ProtectedRoute = ({children,rest}) => {
     const authContext=useContext(AuthContext)

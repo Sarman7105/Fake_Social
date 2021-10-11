@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./LoginForm.scss"
 
 const LoginForm = () => {
-    const url = "http://localhost:8000/api/v1/user/login";
+    // const url = "http://localhost:8000/api/v1/user/login";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,25 +25,33 @@ const LoginForm = () => {
         //   bodyParameters,
         //   config
         // ).then(console.log).catch(console.log);
+
+
+         //Axios to send loging request
+        // axios
+        // .post(url, {
+        //     email: email,
+        //     password: password,
+        // })
+        // .then((response) => {
+        //     console.log(response.data.data);
+        //     if(response){
+        //         console.log(response.data.data.access_token);
+        //     }
+        //     else{
+        //         console.log('error occured');
+        //     }
+        // });
     };
     
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
-        axios
-        .post(url, {
-            email: email,
-            password: password,
-        })
-        .then((response) => {
-            console.log(response.data.data);
-            if(response){
-                console.log(response.data.data.access_token);
-            }
-            else{
-                console.log('error occured');
-            }
-        });
+
+       
+
+        // localStorage.setItem('isLoggedIn',true);
+        console.log('item is set')
     };
 
     const handleOnBlur = (event) => {
