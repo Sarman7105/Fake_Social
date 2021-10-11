@@ -7,6 +7,8 @@ const RegistrationForm = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  
+
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +18,7 @@ const RegistrationForm = () => {
         email: email,
         password: password,
         password_confirmation: confirmPassword,
+       
       })
       .then((response) => {
         console.log(response);
@@ -36,10 +39,6 @@ const RegistrationForm = () => {
 
     if (name === "password") {
       setPassword(value);
-    }
-
-    if (name === "confirmPassword") {
-      setConfirmPassword(value);
     }
   };
 

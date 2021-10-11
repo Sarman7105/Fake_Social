@@ -1,7 +1,10 @@
-import React, { forwardRef, useEffect, useReducer, useState } from 'react';
+import axios from 'axios';
+import React, { forwardRef, useContext, useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../Store/AuthContext';
 import './LandingPage.scss';
 
+const url="http://localhost:8000/api/v1/login";
 
 //Reducer function
 const formReducer=(state,action)=>{
@@ -67,6 +70,7 @@ const LoginForm = forwardRef((props,ref) => {
     const [isFormValid,setIsFormValid]=useState(false);
 
     const[formState,dispatchForm]=useReducer(formReducer,initialValue);
+    const authContext=useContext(AuthContext);
 
     useEffect(() => {
         const identifier = setTimeout(() => {
@@ -114,11 +118,32 @@ const LoginForm = forwardRef((props,ref) => {
 
     }
 
+    //submitting form
+
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+        axios
+        .post(url, {
+            email: formState.email,
+            password: formState.password,
+        })
+        .then((response) => {
+           
+            const {access_token}=response.data.data;
+            console.log(access_token);
+            localStorage.setItem('token',access_token);
+            
+        })
+        .catch((err)=>{
+            console.log(err.response)
+        })
+    };
+
     
     return (
         <div className="loginFormContainer">
             <h3>Login Form</h3>
-            <form className="loginForm" action="">
+            <form className="loginForm" onSubmit={handleOnSubmit}>
 
                 <div className={`loginFormElement`}>
                     <input className={formState.isEmailValid ? ``:`error`} onBlur={handleOnBlur} onChange={onChangeHandler}ref={ref} autoFocus type="text" name="email" placeholder="Enter your email address" />
