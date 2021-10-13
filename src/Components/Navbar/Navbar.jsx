@@ -12,7 +12,7 @@ const Navbar = () => {
             <div className="navbarCenter">
                 <div className="searchbar">
                     <Search className="searchIcon"/>
-                    <input type="text" placeholder="Search your friend" className="searchInput" />
+                    <input type="text" placeholder="Search for friends" className="searchInput" />
                     
                 </div>
             </div>
