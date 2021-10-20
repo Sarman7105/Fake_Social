@@ -30,6 +30,11 @@ function App() {
           <VerifyUser/>
         </Route>
 
+        <Route path='*'>
+          <Home/>
+        </Route>
+
+
       </Switch>
      
     </>
