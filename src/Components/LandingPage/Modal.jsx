@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
+import {Close} from '@material-ui/icons';
 import { useHistory } from 'react-router';
 import './Modal.scss';
 const Modal = (props) => {
@@ -81,7 +82,7 @@ const Modal = (props) => {
             <div className="modalFormContainer">
                 <div className="modalTop">
                 <h3>Sign Up</h3>
-                <span onClick={handleClick}>&#10060;</span>
+                <Close className="modalClose" onClick={handleClick}/>
                 </div>
                 <form  onSubmit={handleSubmit}  className="modalForm">
                     <div className="modalInputElement">

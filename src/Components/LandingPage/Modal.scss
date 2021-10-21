@@ -25,11 +25,12 @@
             align-items: center;
             justify-content: space-between;
 
-            span{
+            .modalClose{
                 margin-right: 10px;
-                font-size: 22px;
+                font-size: 28px !important;
                 &:hover{
                     cursor: pointer;
+                    color: red !important;
                 }
                 
             }
