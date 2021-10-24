@@ -51,7 +51,7 @@ const Share = () => {
                     <div className="shareOptions">
                         <label htmlFor="file" className="shareOption">
                             <PermMedia className="shareIcon"/>
-                            <span className="shareOptionText">Photo/Video</span>
+                            <span className="shareOptionText">Photo</span>
                             <input
                                 style={{display:"none"}}
                                 type="file"
