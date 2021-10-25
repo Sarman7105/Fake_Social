@@ -1,0 +1,31 @@
+.comment{
+    margin: 20px 0;
+    .newComment{
+        display: flex;
+        align-items: center;
+        .commentUserImage{
+            img{
+                height: 34px;
+                width: 34px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-right: 10px;
+
+            }
+        }
+        .commentForm{
+            width: 80%;
+            input{
+                width: 100%;
+                padding: 10px 12px;
+                border: none;
+                border-radius: 20px;
+                font-size: 17px;
+                background-color: #F0F2F5;
+                &:focus{
+                    outline: none;
+                }
+            }
+        }
+    }
+}

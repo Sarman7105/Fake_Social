@@ -5,7 +5,7 @@ import './HomeRightbar'
 const HomeRightbar = () => {
     return (
         <>
-            <BirthdayContainer/>
+            {/* <BirthdayContainer/> */}
             <img src="/Assets/ad.png" alt="" className="rightbarAdd" />
                 <h3 className="RightbarTitle"> Users</h3>
                 <ul className="rightbarFriendList">

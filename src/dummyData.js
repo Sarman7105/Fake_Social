@@ -137,3 +137,28 @@ export const Posts = [
     comment: 12,
   },
 ];
+
+export const Comments=[
+
+  {
+    id:1,
+    userId:1,
+    comment:"this is comment no 1",
+  },
+  {
+    id:2,
+    userId:2,
+    comment:"this is comment no 2",
+  },
+  {
+    id:3,
+    userId:3,
+    comment:"this is comment no 3",
+  },
+  {
+    id:4,
+    userId:4,
+    comment:"this is comment no 4",
+  },
+
+];

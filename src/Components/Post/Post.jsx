@@ -2,7 +2,9 @@ import React,{useState} from 'react';
 import './Post.scss';
 import {MoreVert} from '@material-ui/icons';
 import {Users} from '../../dummyData';
+import {Comments} from '../../dummyData';
 import {PermMedia} from '@material-ui/icons';
+import Comment from '../../Components/Comment/Comment'
 
 
 const Post = (props) => {
@@ -10,6 +12,8 @@ const Post = (props) => {
     const user =Users.filter(user =>user.id===userId);
     const [isOptionVisible,setIsOptionVisible]=useState(false);
     const [isEditSectionVisible,setIsEditSectionVisible]=useState(false);
+    const [isCommentVisible,setIsCommentVisible]=useState(false);
+    const [comments,setComments]=useState([]);
     const [file,setFile]=useState(null);
     console.log(user);
 
@@ -100,9 +104,12 @@ const Post = (props) => {
                         <span className="postLikeCounter"> {like} people liked it!</span>
                     </div>
                     <div className="postBottomRight">
-                        <span className="postCommentText">{comment} comments</span>
+                        <span onClick={()=>{setIsCommentVisible(!isCommentVisible)}} className="postCommentText">{comment} comments</span>
                     </div>
                 </div>
+                {
+                    isCommentVisible && <Comment comments={Comments}/>
+                }
             </div>
         </div>
     );
