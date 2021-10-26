@@ -1,21 +1,43 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import './Post.scss';
 import {MoreVert} from '@material-ui/icons';
 import {Users} from '../../dummyData';
 import {Comments} from '../../dummyData';
 import {PermMedia} from '@material-ui/icons';
 import Comment from '../../Components/Comment/Comment'
+import axios from 'axios';
 
 
 const Post = (props) => {
-    const{photo,desc,date,like,comment,userId}=props.post;
-    const user =Users.filter(user =>user.id===userId);
+    const{image,body,date,likes,comments,user_id,id}=props.post;
+    const{editPost,deletePost}=props;
+    const user =Users.find(user =>user.id===user_id);
     const [isOptionVisible,setIsOptionVisible]=useState(false);
+    const[post,setPost]=useState([]);
     const [isEditSectionVisible,setIsEditSectionVisible]=useState(false);
     const [isCommentVisible,setIsCommentVisible]=useState(false);
-    const [comments,setComments]=useState([]);
-    const [file,setFile]=useState(null);
-    console.log(user);
+    const [commentsNo,setCommentsNo]=useState(comments.length);
+    const[postImage,setPostImage]=useState(null);
+    const[postBody,setPostBody]=useState('');
+    
+    // console.log(user);
+
+    const uploadPicture = (file,setImage) => {
+        const key = "9659c4a5a455e86dd552087fbc881e42";
+        const url = `https://api.imgbb.com/1/upload`;
+        const imageData = new FormData();
+        imageData.set("key", key);
+        imageData.append("image", file);
+        axios
+          .post(url, imageData)
+          .then((res) => {
+              console.log(res.data.data.display_url);
+              setImage(res.data.data.display_url);
+          })
+          .catch((err) => {
+            console.log("error occured");
+          });
+      };
 
     const handleOptionVisible=()=>{
         setIsOptionVisible(!isOptionVisible);
@@ -34,10 +56,17 @@ const Post = (props) => {
     const handleUpdate=(e)=>{
         e.preventDefault();
         setIsEditSectionVisible(false);
+        editPost(id,postBody,postImage);
     }
 
     const handleDelete=()=>{
         setIsOptionVisible(!isOptionVisible);
+        deletePost(id);
+    }
+
+    const handleOnChange=(e)=>{
+        // console.log('file changed');
+        uploadPicture(e.target.files[0],setPostImage);
     }
 
     return (
@@ -45,8 +74,8 @@ const Post = (props) => {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <img src={user[0].profilePicture} alt="" className="postProfileImage" />
-                        <span className="postUserName">{user[0].username}</span>
+                        <img src={user.profilePicture} alt="" className="postProfileImage" />
+                        <span className="postUserName">{user.username}</span>
                         <span className="postDate">{date}</span>
                     </div>
                     <div className="postTopRight">
@@ -61,25 +90,25 @@ const Post = (props) => {
                     </div>
                 </div>
                 <div className="postCenter">
-                    <span className="postText">{desc}</span>
-                    <img className="postImage" src={photo} alt="" />
+                    <p className={(!image)?`postText`:``}>{body}</p>
+                    <img className="postImage" src={image} alt="" />
                     {
                         isEditSectionVisible &&
 
                             <form onSubmit={handleUpdate} className="postEdit">
                                 <div className="postEditElement">
-                                    <textarea autoFocus name="" id="" cols="30" rows="5" value={desc}></textarea>
+                                    <textarea onChange={(e)=>setPostBody(e.target.value)} name="" id="" defaultValue={body} cols="30" rows="5" ></textarea>
                                 </div>
                                 <div className="postEditElement">
-                                    <label htmlFor="file" className="shareOption">
+                                    <label htmlFor="postImage" className="shareOption">
                                     <PermMedia className="shareIcon"/>
                                     <span className="shareOptionText">Photo</span>
                                     <input
                                         style={{display:"none"}}
                                         type="file"
-                                        id="file"
+                                        id="postImage"
                                         accept=".png,.jpeg,.jpg"
-                                        onChange={(e)=>setFile(e.target.files[0])}
+                                        onChange={handleOnChange}
                                     />
                                     </label>
                                 </div>
@@ -101,14 +130,14 @@ const Post = (props) => {
                     <div className="postBottomLeft">
                         <img className="postLikeIcon" src="/Assets/like.png" alt="" />
                         <img className="postLikeIcon" src="/Assets/heart.png" alt="" />
-                        <span className="postLikeCounter"> {like} people liked it!</span>
+                        <span className="postLikeCounter"> {likes.length} people liked it!</span>
                     </div>
                     <div className="postBottomRight">
-                        <span onClick={()=>{setIsCommentVisible(!isCommentVisible)}} className="postCommentText">{comment} comments</span>
+                        <span onClick={()=>{setIsCommentVisible(!isCommentVisible)}} className="postCommentText">{commentsNo} comments</span>
                     </div>
                 </div>
                 {
-                    isCommentVisible && <Comment comments={Comments}/>
+                    isCommentVisible && <Comment setCommentsNo={setCommentsNo} id={id}/>
                 }
             </div>
         </div>

@@ -3,11 +3,12 @@ import './singleComment.scss';
 import {Users} from '../../dummyData'
 
 const SingleComment = (props) => {
-    const user=Users.find((user)=>user.id===props.comment.userId)
+    console.log(props.comment)
+    const user=Users.find((user)=>user.id===props.comment.user_id)
     return (
         <div className="singleComment">
             <div className="image">
-                <img src={`/Assets/person/${props.comment.userId}.jpeg`} alt="" />
+                <img src={`/Assets/person/${props.comment.user_id}.jpeg`} alt="" />
             </div>
             <div className="body">
                 <div className="userName">

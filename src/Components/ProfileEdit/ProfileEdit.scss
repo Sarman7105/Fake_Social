@@ -1,0 +1,141 @@
+.editWrapper{
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgba(255, 251, 251, 0.7);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    // display: none;
+
+
+    .editFormContainer{
+        width: 400px;
+        margin-top: 50px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+
+        .editTop{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .editClose{
+                margin-right: 10px;
+                font-size: 28px !important;
+                &:hover{
+                    cursor: pointer;
+                    color: red !important;
+                }
+                
+            }
+        }
+
+        h3{
+            font-size: 32px;
+            font-weight: normal;
+            color: #5d5d5d;
+            margin: 10px 0;
+            margin-left: 12px;
+        }
+
+        .editForm{
+            width: 100%;
+            height: 100%;
+            // background-color: red;
+            padding: 10px;
+
+            .bioInfo{
+                display: flex;
+                align-items: center;
+                input[type="text"]{
+                    width: 80%;
+                    font-size: 14px;
+                }
+            }
+
+            .editInputElement{
+                width: 90%;
+                // display: flex;
+                // justify-content: center;
+                margin-bottom: 15px;
+
+                .errorMessage{
+                    color: red;
+                    margin-left: 5px;
+                }
+
+                .smallText{
+                    margin-left: 5px;
+                    margin-bottom: 3px;
+                    color: #585858;
+                    font-size: 16px;
+                }
+
+                .editRadioContainer{
+                    display: flex;
+                    justify-content: space-between;
+                    // background-color: red;
+
+                    .gender{
+                        width: 40%;
+                        padding: 10px 15px;
+                        border: 1px solid #9b9b9b;
+                        border-radius: 3px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        label:hover{
+                            cursor: pointer;
+                        }
+                       
+                        
+                    }
+                }
+
+
+                input{
+                    width: 100%;
+                    padding: 14px 16px;
+                    font-size: 17px;
+                    border: 1px solid #9e9e9e;
+                    border-radius: 8px;
+                    outline: none;
+
+                   
+                }
+                input[type="radio"]{
+                    display: inline;
+                    width: fit-content;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    // margin-left: 10px;
+                }
+
+                input[type=submit] {
+                    
+                    background-color: #3e84df;
+                    color: #fff;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border: none;
+                    &:hover{
+                        background-color: #1f71db;
+                        cursor: pointer;
+                    }
+                    &:disabled{
+                        background-color: #aaaaaa;
+                        cursor: not-allowed;
+                        color: rgb(99, 99, 99);
+                    }
+
+                }
+            }
+        }
+    }
+}
