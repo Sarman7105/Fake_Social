@@ -15,14 +15,15 @@ const Profile = () => {
                     <div className="profileRightTop">
                         <div className="profileCover">
 
-                            <img className="profileCoverImage" src="/Assets/post/3.jpeg" alt="" />
-                            <img className="profileUserImage" src="/Assets/person/4.jpeg" alt="" />
+                            <img className="profileCoverImage" src="/Assets/post/NoCoverPicture.jpg" alt="" />
+                            <img className="profileUserImage" src="/Assets/person/noAvatar.png" alt="" />
                         </div>
                         <div className="profileInfo">
                             <h4 className="profileUserName">Sarman Khurshid Alam</h4>
-                            <span  className="profileDesc"> 
+                            <button className="profileEditButton">Edit Profile</button>
+                            {/* <span  className="profileDesc"> 
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Id expedita eos pariatur dolorem nihil cumque omnis doloremque beatae voluptatibus assumenda.
-                             </span>
+                             </span> */}
                         </div>
                     </div>
                     <div className="profileRightBottom">

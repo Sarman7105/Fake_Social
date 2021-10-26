@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { isElementOfType } from 'react-dom/test-utils';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Card from '../UI/Card/Card';
 import './ForgotPassword.scss';
@@ -35,7 +35,7 @@ const formReducer=(state,action)=>{
 }
 
 const ForgotPassword = () => {
-
+    
     const handleOnChange=(e)=>{
         const {name,value}=e.target;
         // console.log(name," ",value)
@@ -46,6 +46,31 @@ const ForgotPassword = () => {
         dispatchForm({type:"isEmailValid"});
     }
 
+    const handleOnSubmit=(e)=>{
+        e.preventDefault();
+        if(form.isEmailValid){
+            // const config = {
+            //     headers: { Authorization: `Bearer ${token}` }
+            // };
+            
+            const bodyParameters = {
+               email: form.email
+            };
+            
+            axios.post( 
+              'http://localhost:8000/api/v1/forgetPassword',
+              bodyParameters,
+            //   config
+            ).then((res)=>{
+                if(res.status===200){
+                    console.log("email");
+                }
+            })
+            .catch((err)=>console.log(err.message));
+        }
+        
+    }
+
     const [form, dispatchForm]=useReducer(formReducer,initialForm)
     return (
         <div className="forgotPassword">
@@ -53,7 +78,7 @@ const ForgotPassword = () => {
                 <h3>Find your account</h3>
                 <div className="divider"></div>
                 <p>Enter your email address to find your account.</p>
-                <form action="">
+                <form onSubmit={handleOnSubmit}>
                 <div className="forgotPasswordFormElement">
                     <input onChange={handleOnChange} onBlur={handleOnBlur} name="email" autoFocus type="text" placeholder="Enter your email address" />
                     {

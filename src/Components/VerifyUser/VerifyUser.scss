@@ -17,12 +17,16 @@
         }
 
 
-        .veifyUserFormElement{
+        .verifyUserFormElement{
             
             width: 100%;
             // display: flex;
             // justify-content: center;
             margin: 15px 0;
+            .error{
+                color: red;
+                margin: 0 5px;
+            }
 
             input{
                 width: 100%;
@@ -34,7 +38,7 @@
                 
             }
 
-            .veifyUserCancel{
+            .verifyUserCancel{
 
                 background-color: rgb(212, 45, 45);
                 padding: 14px 16px;

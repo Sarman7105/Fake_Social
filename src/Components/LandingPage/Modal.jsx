@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useContext } from 'react';
 import {Close} from '@material-ui/icons';
 import { useHistory } from 'react-router';
 import './Modal.scss';
+import AuthContext from '../../Store/AuthContext';
 const Modal = (props) => {
 
     // const[name,setName]=useState("");
@@ -29,6 +30,8 @@ const Modal = (props) => {
     const dateRef=useRef();
     const maleRef=useRef();
     const femaleRef=useRef();
+    const history=useHistory();
+    const authCtx=useContext(AuthContext);
 
     //function for validation
     const isValid=(name,email,password,confirmPassword,date)=>{
@@ -89,6 +92,7 @@ const Modal = (props) => {
 
     //form submitting function
     const handleSubmit=(event)=>{
+        event.preventDefault();
         setNameError("");
         setEmailError("");
         setPasswordError("");
@@ -101,28 +105,39 @@ const Modal = (props) => {
         const confirmPassword=confirmPasswordRef.current.value;
         const date=dateRef.current.value;
         const gender=maleRef.current.checked? "Male": "Female";
-        isValid(name,email,password,confirmPassword,date)
+       
 
         const url = "http://localhost:8000/api/v1/register";
-        // console.log({name,email,password,confirmPassword,date,gender})
-        event.preventDefault();
-        // axios
-        // .post(url, {
-        //     name: name,
-        //     email: email,
-        //     password: password,
-        //     password_confirmation: confirmPassword,
-        //     date_of_birth:date,
-        //     gender:gender,
-        
-        // })
-        // .then(res => {
-        //     console.log(res)
+        if(isValid(name,email,password,confirmPassword,date)){
+            axios
+            .post(url, {
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                date_of_birth:date,
+                gender:gender,
             
-        //   })
-        //   .catch(err => {
-        //      console.log('caught it!',err.response.data);
-        //   });
+            })
+            .then(res => {
+               if(res.status===200){
+                console.log(res);
+                const{id,otp,token}=res.data.data;
+                const user={
+                    id:id,
+                    otp:otp,
+                    token:token
+                }
+                // console.log(user);
+                authCtx.setUser(user);
+                history.push('/verify')
+               }
+                
+              })
+              .catch(err => {
+                 console.log('caught it!',err.response.data);
+              });
+            }
     }
 
 

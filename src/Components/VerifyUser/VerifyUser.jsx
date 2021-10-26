@@ -1,23 +1,55 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import './VerifyUser.scss';
 import Card from '../../Components/UI/Card/Card';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
+import AuthContext from '../../Store/AuthContext';
+import { useRef } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const VerifyUser = () => {
+    const[error,setError]=useState("");
+    const authCtx=useContext(AuthContext);
+    const {id,otp}=authCtx.user;
+    const otpRef=useRef();
+    const history=useHistory()
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        setError("");
+        let isValid=true;
+        const inputOtp=otpRef.current.value;
+        // console.log(typeof(inputOtp));
+        if(otp!=inputOtp){
+            setError('Wrong OTP');
+            isValid=false;
+        }
+        const url=`http://127.0.0.1:8000/api/v1/verify/${otp}/${id}`;
+        console.log(url);
+        if(isValid){
+            axios.get(url)
+            .then(res=>{
+               console.log(res);
+               authCtx.setUser(res.data.data.user)
+               history.push('/');
+            })
+            .catch(err=>console.log(err.responseb));
+        }
+    }
     return (
         <div className='verifyUser'>
             <Card className="verifyUserCard">
                 <p>A code has been sent to your email address. Please enter your verification code </p>
-                <form action="">
-                <div className="veifyUserFormElement">
-                    <input  autoFocus type="number" placeholder="Enter verification code0" />
+                <form onSubmit={handleSubmit}>
+                <div className="verifyUserFormElement">
+                    <input ref={otpRef}  autoFocus type="number" placeholder="Enter verification code" />
+                    <p className="error"> <small>{error}</small> </p>
                 </div>
 
-                <div className="veifyUserFormElement">
+                <div className="verifyUserFormElement">
                     <input type="submit" value="Submit" />
 
                 <Link to='/' className="link">
-                    <button className="veifyUserCancel">
+                    <button className="verifyUserCancel">
                        Cancel
                     </button> 
                 </Link>
