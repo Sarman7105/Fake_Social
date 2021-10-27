@@ -135,7 +135,7 @@ const Modal = (props) => {
                 
               })
               .catch(err => {
-                 console.log('caught it!',err.response.data);
+                 console.log('caught it!');
               });
             }
     }

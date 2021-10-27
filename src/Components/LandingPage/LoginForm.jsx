@@ -68,7 +68,7 @@ const initialValue={
 const LoginForm = forwardRef((props,ref) => {
 
     const [isFormValid,setIsFormValid]=useState(false);
-
+    const [error,setError]=useState('');
     const[formState,dispatchForm]=useReducer(formReducer,initialValue);
     const authContext=useContext(AuthContext);
 
@@ -137,15 +137,17 @@ const LoginForm = forwardRef((props,ref) => {
            
             const {access_token}=response.data.data;
             console.log(response.data.data);
-            const expTime=new Date().getTime()+90000;
-            authContext.login(access_token,expTime)
+            const id=response.data.data.user.id;
+            const expTime=new Date().getTime()+3400000;
+            authContext.login(access_token,expTime,id);
+            history.replace(from);
             
         })
         .catch((err)=>{
-            console.log(err.response)
+            setError('Email or password you entered is incorrect');
         })
         // localStorage.setItem('isLoggedIn',true);
-        history.replace(from);
+        
 
     };
 
@@ -154,7 +156,7 @@ const LoginForm = forwardRef((props,ref) => {
         <div className="loginFormContainer">
             <h3>Login Form</h3>
             <form className="loginForm" onSubmit={handleOnSubmit}>
-
+                <p className="error">{error}</p>
                 <div className={`loginFormElement`}>
                     <input className={formState.isEmailValid ? ``:`error`} onBlur={handleOnBlur} onChange={onChangeHandler}ref={ref} autoFocus type="text" name="email" placeholder="Enter your email address" />
                 </div>

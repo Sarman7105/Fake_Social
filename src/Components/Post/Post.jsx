@@ -9,11 +9,12 @@ import axios from 'axios';
 
 
 const Post = (props) => {
-    const{image,body,date,likes,comments,user_id,id}=props.post;
+    const{image,body,date,comments,user_id,id}=props.post;
     const{editPost,deletePost}=props;
     const user =Users.find(user =>user.id===user_id);
     const [isOptionVisible,setIsOptionVisible]=useState(false);
     const[post,setPost]=useState([]);
+    const[likes,setLikes]=useState(props.post.likes);
     const [isEditSectionVisible,setIsEditSectionVisible]=useState(false);
     const [isCommentVisible,setIsCommentVisible]=useState(false);
     const [commentsNo,setCommentsNo]=useState(comments.length);
@@ -67,6 +68,20 @@ const Post = (props) => {
     const handleOnChange=(e)=>{
         // console.log('file changed');
         uploadPicture(e.target.files[0],setPostImage);
+    }
+
+    const handleLike=()=>{
+        const user_id=localStorage.getItem('id');
+        const post_id=id;
+        const url=`http://localhost:8000/api/v1/deleteLike/${post_id}/${user_id}`;
+        axios.get(url)
+        .then(res=>{
+            setLikes(res.data.data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+        // console.log('liking',user_id,post_id);
     }
 
     return (
@@ -128,8 +143,8 @@ const Post = (props) => {
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img className="postLikeIcon" src="/Assets/like.png" alt="" />
-                        <img className="postLikeIcon" src="/Assets/heart.png" alt="" />
+                        <img onClick={handleLike} className="postLikeIcon" src="/Assets/like.png" alt="" />
+                        {/* <img className="postLikeIcon" src="/Assets/heart.png" alt="" /> */}
                         <span className="postLikeCounter"> {likes.length} people liked it!</span>
                     </div>
                     <div className="postBottomRight">

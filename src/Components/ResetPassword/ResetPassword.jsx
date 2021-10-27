@@ -54,7 +54,7 @@ const ResetPassword = () => {
              //   config
              ).then((res)=>{
                  if(res.status===200){
-                     history.replace('/');
+                     history.replace('/login');
                  }
              })
              .catch((err)=>{

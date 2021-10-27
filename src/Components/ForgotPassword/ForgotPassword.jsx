@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Card from '../UI/Card/Card';
 import './ForgotPassword.scss';
+import { useState } from 'react';
 
 const initialForm ={email: "",isEmailValid: false, error:""}
 const formReducer=(state,action)=>{
@@ -45,6 +46,8 @@ const ForgotPassword = () => {
     const handleOnBlur =()=>{
         dispatchForm({type:"isEmailValid"});
     }
+    const [message,setMessage]=useState('');
+    const [error,setError]=useState('');
 
     const handleOnSubmit=(e)=>{
         e.preventDefault();
@@ -63,10 +66,12 @@ const ForgotPassword = () => {
             //   config
             ).then((res)=>{
                 if(res.status===200){
-                    console.log("email");
+                    setMessage('Verification link has been sent to your email');
                 }
             })
-            .catch((err)=>console.log(err.message));
+            .catch((err)=>{
+                setError("Invalid email");
+            });
         }
         
     }
@@ -79,6 +84,8 @@ const ForgotPassword = () => {
                 <div className="divider"></div>
                 <p>Enter your email address to find your account.</p>
                 <form onSubmit={handleOnSubmit}>
+                    <h4 className="error">{error}</h4>
+                    <h4 className="success">{message}</h4>
                 <div className="forgotPasswordFormElement">
                     <input onChange={handleOnChange} onBlur={handleOnBlur} name="email" autoFocus type="text" placeholder="Enter your email address" />
                     {

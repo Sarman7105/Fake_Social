@@ -29,8 +29,13 @@ const VerifyUser = () => {
             axios.get(url)
             .then(res=>{
                console.log(res);
-               authCtx.setUser(res.data.data.user)
-               history.push('/');
+               
+               authCtx.setUser(res.data.data.user);
+               const id=res.data.data.user.id;
+               const token=authCtx.user.token;
+               const expTime=new Date().getTime()+3400000;
+               authCtx.login(token,expTime,id);
+               history.push("/");
             })
             .catch(err=>console.log(err.response));
         }
