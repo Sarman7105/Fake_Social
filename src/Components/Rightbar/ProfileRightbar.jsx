@@ -1,22 +1,23 @@
 import React from 'react';
 import './ProfileRightbar.scss';
 
-const ProfileRightbar = () => {
+const ProfileRightbar = ({info}) => {
+    console.log(info);
     return (
         <>
             <h4 className="rightbarTitle">User information</h4>
             <div className="rightbarInfo">
                 <div className="rightbarInfoItem">
                     <span className="rightbarInfoKey">City:</span>
-                    <span className="rightbarInfoValue">Rajshahi</span>
+                    <span className="rightbarInfoValue">{info?.city}</span>
                 </div>
                 <div className="rightbarInfoItem">
                     <span className="rightbarInfoKey">From:</span>
-                    <span className="rightbarInfoValue">Bangladesh</span>
+                    <span className="rightbarInfoValue">{info?.country}</span>
                 </div>
                 <div className="rightbarInfoItem">
                     <span className="rightbarInfoKey">Relationship:</span>
-                    <span className="rightbarInfoValue">Single</span>
+                    <span className="rightbarInfoValue">{info?.relationship}</span>
                 </div>
             </div>
             <h4 className="rightbarTitle">User friends</h4>

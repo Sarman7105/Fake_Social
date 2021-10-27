@@ -10,9 +10,8 @@ const ProfileEdit = (props) => {
   const [profileImage, setProfileImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [relationship, setRelationship] = useState(null);
-  
 
-  const uploadPicture = (file,setImage) => {
+  const uploadPicture = (file, setImage) => {
     const key = "9659c4a5a455e86dd552087fbc881e42";
     const url = `https://api.imgbb.com/1/upload`;
     const imageData = new FormData();
@@ -21,8 +20,8 @@ const ProfileEdit = (props) => {
     axios
       .post(url, imageData)
       .then((res) => {
-          console.log(res.data.data.display_url);
-          setImage(res.data.data.display_url);
+        console.log(res.data.data.display_url);
+        setImage(res.data.data.display_url);
       })
       .catch((err) => {
         console.log("error occured");
@@ -31,35 +30,37 @@ const ProfileEdit = (props) => {
 
   const uploadProfileImage = (e) => {
     // setProFile(e.target.files[0]);
-    uploadPicture(e.target.files[0],setProfileImage);
+    uploadPicture(e.target.files[0], setProfileImage);
   };
 
   const uploadCoverImage = (e) => {
     // setCoverFile(e.target.files[0]);
-    uploadPicture(e.target.files[0],setCoverImage);
+    uploadPicture(e.target.files[0], setCoverImage);
   };
 
   //form submitting function
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(profileImage, coverImage);
+    const isSubmitable = !!(
+      city ||
+      country ||
+      relationship ||
+      profileImage ||
+      coverImage
+    );
 
-    const bodyParameters = {
-      user_id: 2,
-      city: city,
-      country: country,
-      relationship: relationship,
-      profile_image_url: profileImage,
-      cover_image_url: coverImage,
-    };
-    axios
-      .post("http://localhost:8000/api/v1/updateProfile", bodyParameters)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (isSubmitable) {
+      const bodyParameters = {
+        user_id: 1,
+        city: city,
+        country: country,
+        relationship: relationship,
+        profile_image_url: profileImage,
+        cover_image_url: coverImage,
+      };
+      props.updateProfile(bodyParameters);
+    }
   };
 
   const handleClick = () => {
