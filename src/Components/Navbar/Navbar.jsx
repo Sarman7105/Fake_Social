@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Navbar.scss';
 import {Search} from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
+import AuthContext from '../../Store/AuthContext';
 
 const Navbar = () => {
+    const authCtx=useContext(AuthContext)
     return (
         <div className="navbarContainer">
             <div className="navbarLeft">
@@ -22,7 +24,7 @@ const Navbar = () => {
 
                     <NavLink to="/" className="navbarLink">Home</NavLink>
                     <NavLink to="/profile" className="navbarLink">Timeline</NavLink>
-                    <span className="navbarLink">Logout</span>
+                    <span onClick={()=>authCtx.logout()} className="navbarLink">Logout</span>
                 </div>
                
             </div>

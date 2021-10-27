@@ -32,7 +32,7 @@ const VerifyUser = () => {
                authCtx.setUser(res.data.data.user)
                history.push('/');
             })
-            .catch(err=>console.log(err.responseb));
+            .catch(err=>console.log(err.response));
         }
     }
     return (

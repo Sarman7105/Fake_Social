@@ -5,7 +5,7 @@ import AuthContext from '../../Store/AuthContext';
 const ProtectedRoute = ({children,rest}) => {
     const authContext=useContext(AuthContext)
     let isLoggedIn=localStorage.getItem('isLoggedIn');
-    const isAuth=isLoggedIn||authContext.isAuth;
+    const isAuth=authContext.isLoggedIn;
     return (
         <Route
       {...rest}

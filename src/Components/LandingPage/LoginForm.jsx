@@ -10,7 +10,7 @@ const url="http://localhost:8000/api/v1/login";
 const formReducer=(state,action)=>{
 
     if(action.type==="setEmail"){
-        console.log(state);
+        // console.log(state);
         return {
             email:action.value,
             isEmailValid:state.isEmailValid,
@@ -20,7 +20,7 @@ const formReducer=(state,action)=>{
     }
 
     if(action.type==="setPassword"){
-        console.log(state);
+        // console.log(state);
         return {
             email:state.email,
             isEmailValid:state.isEmailValid,
@@ -31,7 +31,7 @@ const formReducer=(state,action)=>{
     }
 
     if(action.type==="isEmailValid"){
-        console.log(state);
+        // console.log(state);
         return {
             email:state.email,
             isEmailValid:state.email.includes('@'),
@@ -41,7 +41,7 @@ const formReducer=(state,action)=>{
     }
 
     if(action.type==="isPasswordValid"){
-        console.log(state);
+        // console.log(state);
         return {
             email:state.email,
             isEmailValid:state.isEmailValid,
@@ -128,22 +128,23 @@ const LoginForm = forwardRef((props,ref) => {
         event.preventDefault();
 
         //Axios api section
-        // axios
-        // .post(url, {
-        //     email: formState.email,
-        //     password: formState.password,
-        // })
-        // .then((response) => {
+        axios
+        .post(url, {
+            email: formState.email,
+            password: formState.password,
+        })
+        .then((response) => {
            
-        //     const {access_token}=response.data.data;
-        //     console.log(access_token);
-        //     localStorage.setItem('token',access_token);
+            const {access_token}=response.data.data;
+            console.log(response.data.data);
+            const expTime=new Date().getTime()+90000;
+            authContext.login(access_token,expTime)
             
-        // })
-        // .catch((err)=>{
-        //     console.log(err.response)
-        // })
-        localStorage.setItem('isLoggedIn',true);
+        })
+        .catch((err)=>{
+            console.log(err.response)
+        })
+        // localStorage.setItem('isLoggedIn',true);
         history.replace(from);
 
     };
