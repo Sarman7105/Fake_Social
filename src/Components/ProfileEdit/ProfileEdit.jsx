@@ -51,8 +51,9 @@ const ProfileEdit = (props) => {
     );
 
     if (isSubmitable) {
+      const user_id=localStorage.getItem('id');
       const bodyParameters = {
-        user_id: 1,
+        user_id: user_id,
         city: city,
         country: country,
         relationship: relationship,

@@ -19,10 +19,10 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="navbarRight">
-            <img className="navbarImage" src="/Assets/person/1.jpeg" alt="" />
+            {/* <img className="navbarImage" src="/Assets/person/1.jpeg" alt="" /> */}
                 <div className="navbarLinks">
 
-                    <NavLink to="/" className="navbarLink">Home</NavLink>
+                    {/* <NavLink to="/" className="navbarLink">Home</NavLink> */}
                     <NavLink to="/profile" className="navbarLink">Timeline</NavLink>
                     <span onClick={()=>authCtx.logout()} className="navbarLink">Logout</span>
                 </div>

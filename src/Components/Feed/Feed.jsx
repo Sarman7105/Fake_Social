@@ -8,15 +8,16 @@ import axios from 'axios';
 
 
 const Feed = ({profile}) => {
+    const user_id=localStorage.getItem('id');
     const[posts,setPosts]=useState([])
-    const allPostsUrl= 'http://localhost:8000/api/v1/getPostsById/1';
-    const userPostsUrl= 'http://localhost:8000/api/v1/getAllPosts';
-    const url=profile ? allPostsUrl: userPostsUrl;
+    const userPostsUrl= `http://localhost:8000/api/v1/getPostsById/${user_id}`;
+    const allPostsUrl= 'http://localhost:8000/api/v1/getAllPosts';
+    const url=profile ? userPostsUrl: allPostsUrl;
     
     const fetchingPost=()=>{
         axios.get(url)
         .then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
             setPosts(res.data);
         })
     }
@@ -25,7 +26,6 @@ const Feed = ({profile}) => {
     },[])
 
     const createPost=(post)=>{
-        
         if((post.body || post.image)){
             axios.post('http://localhost:8000/api/v1/createPost',post)
         .then(res=>{

@@ -18,23 +18,31 @@ const Profile = () => {
   const[country,setCountry]=useState("");
   const[relationship,setRelationship]=useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const[name,setName]=useState('');
 
   const handleOnBlur = () => {
     setIsEditing(false);
   };
   
   const setState=(data)=>{
-
-    setProfileImage(data.profile_image_url);
-    setCoverImage(data.cover_image_url);
+    if(data.profile_image_url){
+      setProfileImage(data.profile_image_url);
+    }
+    
+    if(data.cover_image_url){
+      setCoverImage(data.cover_image_url);
+    }
+    
     setCity(data.city);
     setCountry(data.country);
     setRelationship(data.relationship);
+    setName(data.user_name);
 
   }
 
   const fetchProfile=()=>{
-    const url = "http://localhost:8000/api/v1/profileByUserId/1";
+    const user_id=localStorage.getItem('id');
+    const url = `http://localhost:8000/api/v1/profileByUserId/${user_id}`;
     axios
       .get(url)
       .then((res) => {
@@ -77,7 +85,7 @@ const Profile = () => {
               <img className="profileUserImage" src={profileImage} alt="" />
             </div>
             <div className="profileInfo">
-              <h4 className="profileUserName">Sarman Khurshid Alam</h4>
+              <h4 className="profileUserName">{name}</h4>
               <button
                 onClick={() => setIsEditing(true)}
                 className="profileEditButton"

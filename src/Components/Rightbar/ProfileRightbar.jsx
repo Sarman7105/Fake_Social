@@ -2,7 +2,7 @@ import React from 'react';
 import './ProfileRightbar.scss';
 
 const ProfileRightbar = ({info}) => {
-    console.log(info);
+    // console.log(info);
     return (
         <>
             <h4 className="rightbarTitle">User information</h4>

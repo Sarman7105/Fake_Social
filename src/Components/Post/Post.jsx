@@ -10,8 +10,9 @@ import axios from 'axios';
 
 const Post = (props) => {
     const{image,body,date,comments,user_id,id}=props.post;
+    // console.log(user_id,localStorage.getItem('id'));
     const{editPost,deletePost}=props;
-    const user =Users.find(user =>user.id===user_id);
+    const[user,setUser]=useState({});
     const [isOptionVisible,setIsOptionVisible]=useState(false);
     const[post,setPost]=useState([]);
     const[likes,setLikes]=useState(props.post.likes);
@@ -21,7 +22,15 @@ const Post = (props) => {
     const[postImage,setPostImage]=useState(null);
     const[postBody,setPostBody]=useState('');
     
-    // console.log(user);
+    useEffect(()=>{
+        // const user_id=localStorage.getItem('id');
+        const url=`http://localhost:8000/api/v1/profileByUserId/${user_id}`
+        axios.get(url)
+        .then(res=>{
+            setUser(res.data);
+        })
+        .catch(err=>console.log(err))
+    },[])
 
     const uploadPicture = (file,setImage) => {
         const key = "9659c4a5a455e86dd552087fbc881e42";
@@ -89,12 +98,12 @@ const Post = (props) => {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <img src={user.profilePicture} alt="" className="postProfileImage" />
-                        <span className="postUserName">{user.username}</span>
-                        <span className="postDate">{date}</span>
+                        <img src={user.profile_image_url} alt="" className="postProfileImage" />
+                        <span className="postUserName">{user.user_name}</span>
+                        {/* <span className="postDate">{date}</span> */}
                     </div>
                     <div className="postTopRight">
-                        <MoreVert onClick={handleOptionVisible} />
+                      {(user_id==localStorage.getItem('id'))?<MoreVert onClick={handleOptionVisible} />:""} 
                         {
                             isOptionVisible && 
                             <div className="postOption">
