@@ -7,8 +7,9 @@ import axios from 'axios';
 
 
 
-const Feed = ({profile}) => {
-    const user_id=localStorage.getItem('id');
+const Feed = ({profile,user_id}) => {
+    // const user_id=localStorage.getItem('id');
+    
     const[posts,setPosts]=useState([])
     const userPostsUrl= `http://localhost:8000/api/v1/getPostsById/${user_id}`;
     const allPostsUrl= 'http://localhost:8000/api/v1/getAllPosts';

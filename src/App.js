@@ -1,4 +1,4 @@
-import { Route,Switch } from 'react-router';
+import { Route,Switch, useHistory } from 'react-router';
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 import LandingPage from './Components/LandingPage/LandingPage'
 import VerifyUser from './Components/VerifyUser/VerifyUser';
@@ -6,7 +6,12 @@ import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import Home from './Components/Home/Home';
 import ResetPassword from './Components/ResetPassword/ResetPassword.jsx';
 import Profile from './Components/Profile/Profile';
+import AuthContext from './Store/AuthContext';
+import { useContext } from 'react';
 function App() {
+  const authContext=useContext(AuthContext);
+  const isAuth=authContext.isLoggedIn;
+  const history=useHistory();
   return (
     <>
 
@@ -16,9 +21,13 @@ function App() {
           <Home/>
         </ProtectedRoute>
 
-        <ProtectedRoute exact path="/profile">
+        {/* <ProtectedRoute path="/profile/:id">
           <Profile/>
-        </ProtectedRoute>
+        </ProtectedRoute> */}
+        <Route path="/profile/:id">
+          {isAuth? <Profile/>: history.replace('/login')}
+         
+        </Route>
         <Route exact path='/login'>
           <LandingPage/>
         </Route>

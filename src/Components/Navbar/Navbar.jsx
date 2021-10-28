@@ -6,6 +6,7 @@ import AuthContext from '../../Store/AuthContext';
 
 const Navbar = () => {
     const authCtx=useContext(AuthContext)
+    const user_id=localStorage.getItem('id');
     return (
         <div className="navbarContainer">
             <div className="navbarLeft">
@@ -23,7 +24,7 @@ const Navbar = () => {
                 <div className="navbarLinks">
 
                     {/* <NavLink to="/" className="navbarLink">Home</NavLink> */}
-                    <NavLink to="/profile" className="navbarLink">Timeline</NavLink>
+                    <NavLink to={`/profile/${user_id}`} className="navbarLink">Timeline</NavLink>
                     <span onClick={()=>authCtx.logout()} className="navbarLink">Logout</span>
                 </div>
                

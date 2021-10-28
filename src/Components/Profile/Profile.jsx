@@ -6,6 +6,7 @@ import Rightbar from "../Rightbar/Rightbar";
 import Sidebar from "../Sidebar/Sidebar";
 import ProfileEdit from "../ProfileEdit/ProfileEdit.jsx";
 import axios from "axios";
+import { useParams } from "react-router";
 
 const Profile = () => {
   const [profileImage, setProfileImage] = useState(
@@ -19,6 +20,9 @@ const Profile = () => {
   const[relationship,setRelationship]=useState("");
   const [isEditing, setIsEditing] = useState(false);
   const[name,setName]=useState('');
+  const {id}=useParams();
+  const user_id=localStorage.getItem('id');
+  // console.log(id);
 
   const handleOnBlur = () => {
     setIsEditing(false);
@@ -41,8 +45,9 @@ const Profile = () => {
   }
 
   const fetchProfile=()=>{
-    const user_id=localStorage.getItem('id');
-    const url = `http://localhost:8000/api/v1/profileByUserId/${user_id}`;
+    
+    // const id=localStorage.getItem('id');
+    const url = `http://localhost:8000/api/v1/profileByUserId/${id}`;
     axios
       .get(url)
       .then((res) => {
@@ -86,19 +91,19 @@ const Profile = () => {
             </div>
             <div className="profileInfo">
               <h4 className="profileUserName">{name}</h4>
-              <button
+              {(user_id==id) &&<button
                 onClick={() => setIsEditing(true)}
                 className="profileEditButton"
               >
                 Edit Profile
-              </button>
+              </button>}
               {/* <span  className="profileDesc"> 
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Id expedita eos pariatur dolorem nihil cumque omnis doloremque beatae voluptatibus assumenda.
                              </span> */}
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed profile={true} />
+            <Feed profile={true} user_id={id} />
             <Rightbar info={{city,country,relationship}} profile={true} />
           </div>
         </div>
